@@ -7,19 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D33A42F62C10BBAE0092268D /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A42F52C10BBAE0092268D /* ImagesListViewController.swift */; };
+		D33A42F92C10D3FC0092268D /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A42F82C10D3FC0092268D /* ImagesListCell.swift */; };
 		D367C70B2C09FCCF0043579F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D367C70A2C09FCCF0043579F /* AppDelegate.swift */; };
 		D367C70D2C09FCCF0043579F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D367C70C2C09FCCF0043579F /* SceneDelegate.swift */; };
-		D367C70F2C09FCCF0043579F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D367C70E2C09FCCF0043579F /* ViewController.swift */; };
 		D367C7122C09FCCF0043579F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D367C7102C09FCCF0043579F /* Main.storyboard */; };
 		D367C7142C09FCD00043579F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D367C7132C09FCD00043579F /* Assets.xcassets */; };
 		D367C7172C09FCD00043579F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D367C7152C09FCD00043579F /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D33A42F52C10BBAE0092268D /* ImagesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
+		D33A42F82C10D3FC0092268D /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		D33A42FD2C10E1260092268D /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
+		D33A42FE2C10E1260092268D /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		D367C7072C09FCCF0043579F /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D367C70A2C09FCCF0043579F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D367C70C2C09FCCF0043579F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D367C70E2C09FCCF0043579F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D367C7112C09FCCF0043579F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D367C7132C09FCD00043579F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D367C7162C09FCD00043579F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,6 +41,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D33A42F72C10D3D20092268D /* ImagesList */ = {
+			isa = PBXGroup;
+			children = (
+				D33A42F52C10BBAE0092268D /* ImagesListViewController.swift */,
+				D33A42F82C10D3FC0092268D /* ImagesListCell.swift */,
+			);
+			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		D33A42FA2C10DFBE0092268D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D33A42FC2C10E04E0092268D /* Fonts */,
+				D367C7152C09FCD00043579F /* LaunchScreen.storyboard */,
+				D367C7132C09FCD00043579F /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D33A42FB2C10E0380092268D /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D367C7102C09FCCF0043579F /* Main.storyboard */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D33A42FC2C10E04E0092268D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D33A42FD2C10E1260092268D /* YS Display-Bold.ttf */,
+				D33A42FE2C10E1260092268D /* YS Display-Medium.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		D367C6FE2C09FCCF0043579F = {
 			isa = PBXGroup;
 			children = (
@@ -56,12 +96,11 @@
 		D367C7092C09FCCF0043579F /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				D33A42FB2C10E0380092268D /* Presentation */,
+				D33A42FA2C10DFBE0092268D /* Resources */,
+				D33A42F72C10D3D20092268D /* ImagesList */,
 				D367C70A2C09FCCF0043579F /* AppDelegate.swift */,
 				D367C70C2C09FCCF0043579F /* SceneDelegate.swift */,
-				D367C70E2C09FCCF0043579F /* ViewController.swift */,
-				D367C7102C09FCCF0043579F /* Main.storyboard */,
-				D367C7132C09FCD00043579F /* Assets.xcassets */,
-				D367C7152C09FCD00043579F /* LaunchScreen.storyboard */,
 				D367C7182C09FCD00043579F /* Info.plist */,
 			);
 			path = ImageFeed;
@@ -138,8 +177,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D367C70F2C09FCCF0043579F /* ViewController.swift in Sources */,
 				D367C70B2C09FCCF0043579F /* AppDelegate.swift in Sources */,
+				D33A42F92C10D3FC0092268D /* ImagesListCell.swift in Sources */,
+				D33A42F62C10BBAE0092268D /* ImagesListViewController.swift in Sources */,
 				D367C70D2C09FCCF0043579F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -218,7 +258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -275,7 +315,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
