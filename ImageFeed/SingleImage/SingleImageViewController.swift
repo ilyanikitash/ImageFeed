@@ -9,7 +9,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     @IBOutlet private var imageView: UIImageView!
-    
+    @IBOutlet private var scrollView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
