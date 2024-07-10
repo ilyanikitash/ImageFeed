@@ -4,9 +4,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         create()
-        
     }
     private func create() {
 //      Profile Image
@@ -71,7 +69,9 @@ final class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             escapeButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
             escapeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                   constant: -24)
+                                                   constant: -24),
+            escapeButton.heightAnchor.constraint(equalToConstant: 24),
+            escapeButton.widthAnchor.constraint(equalToConstant: 24)
         ])
     }
 }

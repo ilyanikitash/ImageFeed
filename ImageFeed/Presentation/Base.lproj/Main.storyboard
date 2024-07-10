@@ -145,10 +145,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9M-Le-oxr">
-                                <rect key="frame" x="171.66666666666666" y="785" width="50" height="50"/>
+                                <rect key="frame" x="171" y="784" width="51" height="51"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="5WL-xu-rpK"/>
-                                    <constraint firstAttribute="height" constant="50" id="6e9-Ja-yXQ"/>
+                                    <constraint firstAttribute="width" constant="51" id="5WL-xu-rpK"/>
+                                    <constraint firstAttribute="height" constant="51" id="6e9-Ja-yXQ"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Share Button"/>
