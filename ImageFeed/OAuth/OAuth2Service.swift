@@ -6,9 +6,9 @@ final class OAuth2Service {
     
     private init() {}
     
-    func makeOAuthTokenRequest(code: String) -> URLRequest? {
+    private func makeOAuthTokenRequest(code: String) throws -> URLRequest? {
         guard let baseUrl = URL(string: "https://unsplash.com") else {
-            fatalError("Invalid base URL")
+            throw AuthServiceErrors.invalidURL
         }
         guard let url = URL(
             string: "/oauth/token"
@@ -19,7 +19,7 @@ final class OAuth2Service {
             + "&&grant_type=authorization_code",
             relativeTo: baseUrl
         ) else {
-            fatalError("Invalid URL")
+            throw AuthServiceErrors.invalidURL
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -27,25 +27,26 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void ) {
-        guard let request = makeOAuthTokenRequest(code: code) else {
-            fatalError("Invalid request")
+        guard let request = try? makeOAuthTokenRequest(code: code) else {
+            completion(.failure(AuthServiceErrors.invalidRequest))
+            return
         }
-        URLSession.shared.data(for: request) { result in
+        URLSession.shared.data(for: request) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let data):
                 do {
-                    let decoder = JSONDecoder()
+                    let decoder = SnakeCaseJSONDecoder()
                     let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
                     self.storage.token = response.accessToken
-                        
                     completion(.success(response.accessToken))
                 } catch {
                     print("Error decoding OAuth token response: \(error.localizedDescription)")
-                    completion(.failure(error))
+                    completion(.failure(AuthServiceErrors.invalidAccessTokenDecoding))
                 }
             case .failure(let error):
                 print("Error fetching OAuth token: \(error.localizedDescription)")
-                completion(.failure(error))
+                completion(.failure(AuthServiceErrors.invalidFetchingToken))
             }
         }.resume()
     }

@@ -7,7 +7,6 @@ protocol AuthViewControllerDelegate: AnyObject {
 final class AuthViewController: UIViewController {
     
     private let showWebViewSegueIdentifier = "ShowWebView"
-    private let oauth2Service = OAuth2Service.shared
     
     weak var delegate: AuthViewControllerDelegate?
     
@@ -19,9 +18,9 @@ final class AuthViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showWebViewSegueIdentifier {
-            guard
-                let webViewViewController = segue.destination as? WebViewViewController
-            else { fatalError("Failed to prepare for \(showWebViewSegueIdentifier)") }
+            guard let webViewViewController = segue.destination as? WebViewViewController else {
+                fatalError("Failed to prepare for \(showWebViewSegueIdentifier)")
+            }
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
@@ -58,7 +57,6 @@ extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         vc.dismiss(animated: true)
     }
-    
 }
 
 

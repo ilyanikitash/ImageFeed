@@ -1,5 +1,5 @@
 import UIKit
-@preconcurrency import WebKit
+import WebKit // если ставить '@preconcurrency' перед импорт, то пропадает warning. так и не понял на что это влияет...
 
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode: String)
@@ -17,8 +17,6 @@ final class WebViewViewController: UIViewController {
         super.viewDidLoad()
         webView.navigationDelegate = self
         loadAuthView()
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,9 +31,7 @@ final class WebViewViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        webView.removeObserver(self,
-                               forKeyPath: #keyPath(WKWebView.estimatedProgress),
-                               context: nil)
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
     }
     
     override func observeValue(forKeyPath keyPath: String?,
@@ -81,14 +77,12 @@ final class WebViewViewController: UIViewController {
             URLQueryItem(name: "scope", value: Constants.accessScope)
         ]
         guard let url = urlComponents.url else { return }
-        
         let request = URLRequest(url: url)
         webView.load(request)
     }
 }
 
 extension WebViewViewController: WKNavigationDelegate {
-    
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
@@ -101,5 +95,4 @@ extension WebViewViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
-    
 }
