@@ -1,5 +1,5 @@
 import UIKit
-import WebKit // если ставить '@preconcurrency' перед импорт, то пропадает warning. так и не понял на что это влияет...
+import WebKit 
 
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode: String)
