@@ -1,20 +1,43 @@
 import UIKit
+import ProgressHUD
 
 final class SplashScreenViewController: UIViewController {
     private let storage = OAuthTokenStorage()
     private let oauth2Service = OAuth2Service.shared
+    private let profileService = ProfileService.shared
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
+    private var alertPresenter: AlertPresenter?
+    
+    private lazy var imageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "LaunchScreenImage")
+        return imageView
+    }()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkToken()
+        setupViewAndConstraints()
     }
-    
+    private func setupViewAndConstraints() {
+        view.backgroundColor = .ypBlack
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 78),
+            imageView.widthAnchor.constraint(equalToConstant: 75)
+        ])
+    }
     private func checkToken() {
-        if storage.token != nil {
-            switchToTabBarController()
+        if let token = storage.token {
+            fetchProfile(token: token)
         } else {
-            performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
+            let authViewController = AuthViewController()
+            authViewController.delegate = self
+            authViewController.modalPresentationStyle = .fullScreen
+            present(authViewController, animated: true)
         }
     }
     private func switchToTabBarController() {
@@ -22,23 +45,6 @@ final class SplashScreenViewController: UIViewController {
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
         window.rootViewController = tabBarController
-    }
-}
-
-extension SplashScreenViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                assertionFailure("Failed to prepate for \(showAuthenticationScreenSegueIdentifier)")
-                return
-            }
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
     }
 }
 
@@ -51,14 +57,36 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
     }
     
     private func fetchOAuthToken(_ code: String) {
+        UIBlockingProgressHUD.show()
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
             guard let self else { return }
             switch result {
             case .success:
-                self.switchToTabBarController()
+                guard let token = storage.token else { return }
+                fetchProfile(token: token)
             case .failure(let error):
                 print("\(error.localizedDescription) - error fetching oauth token")
-                break
+                let alertModel = AlertModel(title: "Что-то пошло не так(",
+                                            message: "Не удалось войти в систему",
+                                            buttonText: "Ок",
+                                            completion: nil)
+                
+                alertPresenter?.showAlert(vc: self, model: alertModel)
+            }
+        }
+    }
+    
+    private func fetchProfile(token: String) {
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token: token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self else { return }
+            switch result {
+            case .success:
+                switchToTabBarController()
+            case .failure(let error):
+                print("\(error.localizedDescription) - error fetching profile")
             }
         }
     }

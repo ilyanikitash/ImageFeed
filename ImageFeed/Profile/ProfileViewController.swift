@@ -1,15 +1,103 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    private let profileService = ProfileService.shared
+    private let storage = OAuthTokenStorage()
+    private let profileImageService = ProfileImageService.shared
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    private lazy var nameLabel = createLabel(
+        text: "Екатерина Новикова",
+        color: .white,
+        font: .boldSystemFont(ofSize: 23.0)
+    )
+    
+    private lazy var loginLabel = createLabel(
+        text: "@ekaterina_nov",
+        color: .ypGray,
+        font: .systemFont(ofSize: 13.0)
+    )
+    
+    private lazy var descriptionLabel = createLabel(
+        text: "Hello World!",
+        color: .white,
+        font: .systemFont(ofSize: 13.0)
+    )
+    
+    private lazy var imageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Userpick")
+        imageView.layer.cornerRadius = 35
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private lazy var escapeButton = {
+        let button = UIButton.systemButton(with: UIImage(
+            systemName: "ipad.and.arrow.forward") ?? UIImage(),
+                                           target: nil,
+                                           action: nil)
+        button.tintColor = .ypRed
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        create()
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(forName: ProfileImageService.didChangeNotification,
+                         object: nil,
+                         queue: .main
+            ) { [weak self] _ in
+                guard let self else { return }
+                self.updateAvatar()
+            }
+        view.backgroundColor = .ypBlack
+        updateAvatar()
+        setupConstraints()
+        updateProfileDetails(profile: profileService.profile)
     }
-    private func create() {
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = profileImageService.profileImageURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        imageView.kf.setImage(with: url,
+                              placeholder: UIImage(named: "profile_placeholder")) { result in
+            switch result {
+            case .success(let value):
+                print(value.image)
+            case .failure(let error):
+                print("Error loading image: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func updateProfileDetails(profile: Profile?) {
+        guard let profile = profile else {
+            return
+        }
+        self.nameLabel.text = profile.name
+        self.loginLabel.text = profile.loginName
+        self.descriptionLabel.text = profile.bio
+    }
+    
+    private func createLabel(text: String,
+                             color: UIColor,
+                             font: UIFont) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.textColor = color
+        label.font = font
+        
+        return label
+    }
+    
+    private func setupConstraints() {
 //      Profile Image
-        let profileImage = UIImage(named: "Userpick")
-        let imageView = UIImageView(image: profileImage)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         
@@ -22,10 +110,6 @@ final class ProfileViewController: UIViewController {
                                            constant: 32)
         ])
 //      Name Label
-        let nameLabel = UILabel()
-        nameLabel.text = "Екатерина Новикова"
-        nameLabel.textColor = .white
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 23.0)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
@@ -34,10 +118,6 @@ final class ProfileViewController: UIViewController {
             nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor)
         ])
 //      Login Label
-        let loginLabel = UILabel()
-        loginLabel.text = "@ekaterina_nov"
-        loginLabel.textColor = .ypGray
-        loginLabel.font = UIFont.systemFont(ofSize: 13.0)
         loginLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginLabel)
         
@@ -46,10 +126,6 @@ final class ProfileViewController: UIViewController {
             loginLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor)
         ])
 //      Description Label
-        let descriptionLabel = UILabel()
-        descriptionLabel.text = "Hello World!"
-        descriptionLabel.textColor = .white
-        descriptionLabel.font = UIFont.systemFont(ofSize: 13.0)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(descriptionLabel)
         
@@ -58,11 +134,6 @@ final class ProfileViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor)
         ])
 //      Escape Button
-        let escapeButton = UIButton.systemButton(with: UIImage(
-                                                systemName: "ipad.and.arrow.forward") ?? UIImage(),
-                                                target: nil,
-                                                action: nil)
-        escapeButton.tintColor = .ypRed
         escapeButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(escapeButton)
         

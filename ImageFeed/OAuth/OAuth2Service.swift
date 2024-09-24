@@ -3,6 +3,10 @@ import Foundation
 final class OAuth2Service {
     static let shared = OAuth2Service()
     private let storage = OAuthTokenStorage()
+    private let urlSession: URLSession = .shared
+    
+    private var task: URLSessionTask?
+    private var lastCode: String?
     
     private init() {}
     
@@ -26,29 +30,39 @@ final class OAuth2Service {
         return request
     }
     
-    func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void ) {
+    func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        
+        guard lastCode != code else {
+            completion(.failure(AuthServiceErrors.invalidRequest))
+            return
+        }
+        
+        task?.cancel()
+        lastCode = code
+        
         guard let request = try? makeOAuthTokenRequest(code: code) else {
             completion(.failure(AuthServiceErrors.invalidRequest))
             return
         }
-        URLSession.shared.data(for: request) { [weak self] result in
+        
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             guard let self else { return }
-            switch result {
-            case .success(let data):
-                do {
-                    let decoder = SnakeCaseJSONDecoder()
-                    let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
                     self.storage.token = response.accessToken
                     completion(.success(response.accessToken))
-                } catch {
-                    print("Error decoding OAuth token response: \(error.localizedDescription)")
-                    completion(.failure(AuthServiceErrors.invalidAccessTokenDecoding))
+                case .failure(let error):
+                    print("[\(String(describing: self)).\(#function)]: \(ProfileImageServiceErrors.invalidFetchingImage) -  Error fetching OAuth token, \(error.localizedDescription)")
+                    completion(.failure(AuthServiceErrors.invalidFetchingToken))
                 }
-            case .failure(let error):
-                print("Error fetching OAuth token: \(error.localizedDescription)")
-                completion(.failure(AuthServiceErrors.invalidFetchingToken))
+                self.task = nil
+                self.lastCode = nil
             }
-        }.resume()
+        }
+        self.task = task
+        task.resume()
     }
 }
     

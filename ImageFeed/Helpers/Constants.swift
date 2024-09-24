@@ -5,13 +5,30 @@ enum Constants {
     static let secretKey = "lzKE74s5GzmJmqYCcRi_KfJjH2t-NBE8n3woN-_dGfs"
     static let redirectURI = "urn:ietf:wg:oauth:2.0:oob"
     static let accessScope = "public+read_user+write_likes"
-    static let defaultBaseURL = URL(string: "https://unsplash.com/oauth/token")
+    static let defaultBaseURL = URL(string: "https://api.unsplash.com")
     static let unsplachAuthorizeURLString = "https://unsplash.com/oauth/authorize"
 }
 
 enum AuthServiceErrors: Error {
     case invalidRequest
+    case invalidResponse
     case invalidFetchingToken
     case invalidAccessTokenDecoding
     case invalidURL
+}
+
+enum ProfileServiceErrors: Error {
+    case invalidRequest
+    case invalidURL
+    case invalidToken
+    case invalidDecodingProfile
+    case invalidFetchingProfile
+}
+
+enum ProfileImageServiceErrors: Error {
+    case invalidRequest
+    case invalidURL
+    case invalidToken
+    case invalidDecodingImage
+    case invalidFetchingImage
 }
