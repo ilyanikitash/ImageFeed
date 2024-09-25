@@ -37,7 +37,7 @@ final class SplashScreenViewController: UIViewController {
             let authViewController = AuthViewController()
             authViewController.delegate = self
             authViewController.modalPresentationStyle = .fullScreen
-            present(authViewController, animated: true)
+            present(authViewController, animated: true, completion: nil)
         }
     }
     private func switchToTabBarController() {
@@ -52,6 +52,7 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         vc.dismiss(animated: true) { [weak self]  in
             guard let self = self else { return }
+            print("did authenticate")
             self.fetchOAuthToken(code)
         }
     }
@@ -59,7 +60,6 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
     private func fetchOAuthToken(_ code: String) {
         UIBlockingProgressHUD.show()
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
-            UIBlockingProgressHUD.dismiss()
             guard let self else { return }
             switch result {
             case .success:
@@ -74,13 +74,13 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
                 
                 alertPresenter?.showAlert(vc: self, model: alertModel)
             }
+            UIBlockingProgressHUD.dismiss()
         }
     }
     
     private func fetchProfile(token: String) {
         UIBlockingProgressHUD.show()
         profileService.fetchProfile(token: token) { [weak self] result in
-            UIBlockingProgressHUD.dismiss()
             guard let self else { return }
             switch result {
             case .success:
@@ -88,6 +88,7 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
             case .failure(let error):
                 print("\(error.localizedDescription) - error fetching profile")
             }
+            UIBlockingProgressHUD.dismiss()
         }
     }
 }

@@ -8,39 +8,65 @@ final class AuthViewController: UIViewController {
     
     private let showWebViewSegueIdentifier = "ShowWebView"
     
+    private let loginButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .white
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        button.setTitle("Войти", for: .normal)
+        button.setTitleColor(.ypBlack, for: .normal)
+        button.layer.cornerRadius = 16
+        button.layer.masksToBounds = true
+        
+        return button
+    }()
+    
+    private let unsplashLogoImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "logo_of_unsplash")
+        return imageView
+    }()
+    
     weak var delegate: AuthViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpLogo()
+        setUpViews()
+        setUpConstrainsts()
         configureBackButton()
+        loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showWebViewSegueIdentifier {
-            guard let webViewViewController = segue.destination as? WebViewViewController else {
-                fatalError("Failed to prepare for \(showWebViewSegueIdentifier)")
-            }
-            webViewViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
+    @objc private func didTapLoginButton() {
+        let viewController = WebViewViewController()
+        viewController.delegate = self
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
+    }
+    
+    func setUpViews() {
+        view.backgroundColor = .ypBlack
+        [unsplashLogoImageView,
+        loginButton].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
         }
     }
     
-    private func setUpLogo() {
-        // Unsplash Logo
-        let unsplashLogo = UIImage(named: "logo_of_unsplash")
-        let unsplashLogoImageView = UIImageView(image: unsplashLogo)
-        unsplashLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(unsplashLogoImageView)
-        
+    private func setUpConstrainsts() {
         NSLayoutConstraint.activate([
             unsplashLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             unsplashLogoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             unsplashLogoImageView.heightAnchor.constraint(equalToConstant: 60),
-            unsplashLogoImageView.widthAnchor.constraint(equalToConstant: 60)
+            unsplashLogoImageView.widthAnchor.constraint(equalToConstant: 60),
+            
+            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -124),
+            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            loginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
+    
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "nav_back_button")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav_back_button")
