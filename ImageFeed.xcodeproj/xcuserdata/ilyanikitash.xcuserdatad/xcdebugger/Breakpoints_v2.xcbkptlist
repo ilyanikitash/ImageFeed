@@ -20,5 +20,93 @@
             landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "007473AF-97F2-496B-BF1C-A8DFDB634BF9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImageFeed/Auth/WebViewViewConroller.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "4"
+            endingLineNumber = "4"
+            landmarkName = "WebViewViewConroller"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "007473AF-97F2-496B-BF1C-A8DFDB634BF9 - 3af44f8786b5fae2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ImageFeed.WebViewViewConroller.__allocating_init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; ImageFeed.WebViewViewConroller"
+                  moduleName = "ImageFeed.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilyanikitash/projects/ImageFeed/ImageFeed/Auth/WebViewViewConroller.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "007473AF-97F2-496B-BF1C-A8DFDB634BF9 - aa39bbee010d3c2b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ImageFeed.WebViewViewConroller.__allocating_init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;ImageFeed.WebViewViewConroller&gt;"
+                  moduleName = "ImageFeed.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilyanikitash/projects/ImageFeed/ImageFeed/Auth/WebViewViewConroller.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "007473AF-97F2-496B-BF1C-A8DFDB634BF9 - 62492342ba1973b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ImageFeed.WebViewViewConroller.__deallocating_deinit"
+                  moduleName = "ImageFeed.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilyanikitash/projects/ImageFeed/ImageFeed/Auth/WebViewViewConroller.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "007473AF-97F2-496B-BF1C-A8DFDB634BF9 - 306587b0b78943cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ImageFeed.WebViewViewConroller.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; ImageFeed.WebViewViewConroller"
+                  moduleName = "ImageFeed.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilyanikitash/projects/ImageFeed/ImageFeed/Auth/WebViewViewConroller.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "4"
+                  endingLineNumber = "4">
+               </Location>
+               <Location
+                  uuid = "007473AF-97F2-496B-BF1C-A8DFDB634BF9 - 49cb463afe3f1fd0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ImageFeed.WebViewViewConroller.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;ImageFeed.WebViewViewConroller&gt;"
+                  moduleName = "ImageFeed.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ilyanikitash/projects/ImageFeed/ImageFeed/Auth/WebViewViewConroller.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "4"
+                  endingLineNumber = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
