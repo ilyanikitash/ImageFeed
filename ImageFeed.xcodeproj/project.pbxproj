@@ -37,6 +37,8 @@
 		D3DBED042CA1E7E9005560DE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D3DBED032CA1E7E9005560DE /* Kingfisher */; };
 		D3DBED072CA1FF23005560DE /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = D3DBED062CA1FF23005560DE /* SwiftKeychainWrapper */; };
 		D3E1CA732C95C7D500DB57FD /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1CA722C95C7D500DB57FD /* ProgressHUD */; };
+		D3F84BB92CAC842E00C787CC /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F84BB82CAC842300C787CC /* ImageListService.swift */; };
+		D3F84BBC2CAC84FC00C787CC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F84BBB2CAC84F900C787CC /* Photo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		D3B501B12C8A2E1E00882D75 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		D3BEF7842C88D5C7009038F0 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		D3C39B332C26E94D0062FCB2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D3F84BB82CAC842300C787CC /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
+		D3F84BBB2CAC84F900C787CC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +164,8 @@
 		D367C7092C09FCCF0043579F /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				D3F84BBB2CAC84F900C787CC /* Photo.swift */,
+				D3F84BB82CAC842300C787CC /* ImageListService.swift */,
 				D36603952CA2E05E003D127B /* TabBar */,
 				D373D9DF2CA0B7E900D0B571 /* Alert */,
 				D3A170292C9387FC00B727F2 /* Helpers */,
@@ -318,10 +324,12 @@
 				D3987E092C9B14FF00555240 /* UIBlockingProgressHUD.swift in Sources */,
 				D34A906B2C918AE5001F2C58 /* OAuthTokenResponseBody.swift in Sources */,
 				D33A42F92C10D3FC0092268D /* ImagesListCell.swift in Sources */,
+				D3F84BBC2CAC84FC00C787CC /* Photo.swift in Sources */,
 				D3C39B342C26E94D0062FCB2 /* ProfileViewController.swift in Sources */,
 				D3987E0B2C9B182A00555240 /* ProfileService.swift in Sources */,
 				D373D9E12CA0B7F900D0B571 /* AlertPresenter.swift in Sources */,
 				D36603972CA2E073003D127B /* TabBarController.swift in Sources */,
+				D3F84BB92CAC842E00C787CC /* ImageListService.swift in Sources */,
 				D312029C2C9021EC005680A2 /* OAuth2Service.swift in Sources */,
 				D34A906F2C937AFD001F2C58 /* OAuthTokenStorage.swift in Sources */,
 				D33A42F62C10BBAE0092268D /* ImagesListViewController.swift in Sources */,

@@ -34,3 +34,9 @@ enum ProfileImageServiceErrors: Error {
     case invalidDecodingImage
     case invalidFetchingImage
 }
+
+enum ImageListServiceErrors: Error {
+    case invalidRequest
+    case invalidURL
+    case invalidFetchingImagesList
+}
