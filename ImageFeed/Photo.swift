@@ -10,7 +10,7 @@ import Foundation
 struct Photo {
     let id: String
     let size: CGSize
-    let createdAt: Date?
+    let createdAt: String
     let welocomeDescription: String?
     let thumbImageURL: String
     let largeImageURL: String
@@ -19,25 +19,25 @@ struct Photo {
     init(result photo: PhotoResult) {
         self.id = photo.id
         self.size = CGSize(width: photo.width, height: photo.height)
-        self.createdAt = ISO8601DateFormatter().date(from: photo.createdAt)
+        self.createdAt = photo.createdAt
         self.welocomeDescription = photo.description ?? ""
-        self.thumbImageURL = photo.urls?.thumbURL ?? ""
-        self.largeImageURL = photo.urls?.largeURL ?? ""
+        self.thumbImageURL = photo.urls?.thumb ?? ""
+        self.largeImageURL = photo.urls?.full ?? ""
         self.isLiked = photo.isLiked ?? false
     }
 }
 
 struct PhotoResult: Decodable {
     let id: String
-    let width: Int
-    let height: Int
     let createdAt: String
+    let height: Int
+    let width: Int
     let description: String?
     let isLiked: Bool?
     let urls: UrlsResult?
 }
 
 struct UrlsResult: Decodable {
-    let thumbURL: String
-    let largeURL: String
+    let full: String
+    let thumb: String
 }

@@ -8,9 +8,11 @@
 import Foundation
 
 final class ImageListService {
+    private(set) var photos: [Photo] = []
+    
+    private let storage = OAuthTokenStorage()
     private let perPage: Int = 10
     private let urlSession: URLSession = .shared
-    private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
     
@@ -24,6 +26,8 @@ final class ImageListService {
         guard var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else {
             throw ImageListServiceErrors.invalidURL
         }
+        components.path = "/photos"
+        
         components.queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "per_page", value: "\(perPage)"),
@@ -35,7 +39,7 @@ final class ImageListService {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        //request.setValue("Bearer \(OAuthTokenStorage())", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(storage)", forHTTPHeaderField: "Authorization")
         return request
     }
     func fetchPhotosNextPage() {
