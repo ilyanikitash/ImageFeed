@@ -8,6 +8,9 @@
 import Foundation
 
 final class ImageListService {
+    static let shared = ImageListService()
+    static let didChageNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    
     private(set) var photos: [Photo] = []
     
     private let storage = OAuthTokenStorage()
@@ -16,7 +19,7 @@ final class ImageListService {
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
     
-    static let didChageNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    private init() {}
     
     private func makePhotosNextPageRequest(page: Int, perPage: Int) throws -> URLRequest? {
         guard let baseUrl = Constants.defaultBaseURL else {
@@ -43,6 +46,7 @@ final class ImageListService {
         return request
     }
     func fetchPhotosNextPage() {
+        print("fetching next page")
         assert(Thread.isMainThread)
         guard task == nil else { return }
         let nextPage = (lastLoadedPage ?? 0) + 1

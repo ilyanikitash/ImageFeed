@@ -7,4 +7,9 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var imageCell: UIImageView!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageCell.kf.cancelDownloadTask()
+        imageCell.image = nil
+    }
 }
