@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-final class ImageListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
@@ -9,7 +9,8 @@ final class ImageListViewController: UIViewController {
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let imageListService = ImageListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
-    private var photos: [Photo] = []
+    var photos: [Photo] = []
+    private var alertPresenter: AlertPresenter?
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -19,9 +20,9 @@ final class ImageListViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupObserver()
         setupTableView()
-        updateTableViewAnimated()
+        setupObserver()
+        imageListService.fetchPhotosNextPage()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -33,8 +34,8 @@ final class ImageListViewController: UIViewController {
                 assertionFailure("Invalid segue destination")
                 return
             }
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            let image = photos[indexPath.row]
+            viewController.imageURL = URL(string: image.largeImageURL)
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -43,7 +44,6 @@ final class ImageListViewController: UIViewController {
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = 200
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
     
@@ -59,11 +59,9 @@ final class ImageListViewController: UIViewController {
     }
     
     private func updateTableViewAnimated() {
-        print("update table")
         let oldCount = photos.count
         let newCount = imageListService.photos.count
         photos = imageListService.photos
-        print(photos)
         if oldCount != newCount {
             tableView.performBatchUpdates {
                 var indexPaths: [IndexPath] = []
@@ -77,7 +75,7 @@ final class ImageListViewController: UIViewController {
 }
 
 
-extension ImageListViewController: UITableViewDelegate {
+extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { 
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
@@ -94,7 +92,7 @@ extension ImageListViewController: UITableViewDelegate {
     }
 }
 
-extension ImageListViewController: UITableViewDataSource {
+extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
@@ -105,6 +103,7 @@ extension ImageListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         configCell(for: imageListCell, with: indexPath)
+        imageListCell.delegate = self
         return imageListCell
     }
     
@@ -115,7 +114,7 @@ extension ImageListViewController: UITableViewDataSource {
     }
 }
 
-extension ImageListViewController {
+extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let image = photos[indexPath.row]
         cell.imageCell.kf.indicatorType = .activity
@@ -123,11 +122,35 @@ extension ImageListViewController {
         cell.dateLabel.text = dateFormatter.string(from: ISO8601DateFormatter().date(from: image.createdAt) ?? Date())
         cell.dateLabel.textColor = .white
         
-        
-        
-        let isLiked = indexPath.row % 2 == 0
-        let likeImage = isLiked ? UIImage(named: "Active Like") : UIImage(named: "No Active Like")
+        let isLiked = image.isLiked
+        let likeImage = isLiked ? UIImage(named: "active_like") : UIImage(named: "no_active_like")
         cell.likeButton.setImage(likeImage, for: .normal)
+    }
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imagesListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = imageListService.photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        let isLike = !photo.isLiked
+        imageListService.changeLike(photoId: photo.id, isLike: isLike) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success():
+                ImagesListCell().setIsLiked(isLike: isLike, cell: cell)
+                UIBlockingProgressHUD.dismiss()
+            case .failure(let error):
+                UIBlockingProgressHUD.dismiss()
+                print("\(error.localizedDescription) - error change like")
+                let alertModel = AlertModel(title: "Что-то пошло не так(",
+                                            message: "Не удалось поставить лайк",
+                                            buttonText: "Ок",
+                                            completion: nil)
+                
+                self.alertPresenter?.showAlert(vc: self, model: alertModel)
+            }
+        }
     }
 }
 

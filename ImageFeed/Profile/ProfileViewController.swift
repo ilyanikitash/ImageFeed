@@ -3,6 +3,7 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    private let profileLogoutService = ProfileLogoutService.shared
     private let profileService = ProfileService.shared
     private let storage = OAuthTokenStorage()
     private let profileImageService = ProfileImageService.shared
@@ -58,6 +59,27 @@ final class ProfileViewController: UIViewController {
         updateAvatar()
         setupConstraints()
         updateProfileDetails(profile: profileService.profile)
+        escapeButton.addTarget(self, action: #selector(didTapEscapeButton), for: .touchUpInside)
+    }
+    
+    private func animataProfileImage() {
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(origin: .zero, size: CGSize(width: 70, height: 70))
+        gradient.locations = [0, 0.1, 0.3]
+        gradient.colors = [
+            UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
+            UIColor(red: 0.531, green: 0.533, blue: 0.553, alpha: 1).cgColor,
+            UIColor(red: 0.431, green: 0.433, blue: 0.453, alpha: 1).cgColor
+        ]
+        gradie
+    }
+    
+    @objc private func didTapEscapeButton() {
+        profileLogoutService.logout()
+        
+        let viewController = SplashScreenViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
     }
     
     private func updateAvatar() {

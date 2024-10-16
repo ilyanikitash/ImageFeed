@@ -11,6 +11,7 @@
 		D30B08642C9C9E2C00CF9446 /* ProfileImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B08632C9C9E1C00CF9446 /* ProfileImageModel.swift */; };
 		D312029C2C9021EC005680A2 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D312029B2C9021E4005680A2 /* OAuth2Service.swift */; };
 		D31D15392C8790F600F18925 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D15382C8790EE00F18925 /* Constants.swift */; };
+		D3211CAF2CB533CF0061AEE9 /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3211CAE2CB533BB0061AEE9 /* ProfileLogoutService.swift */; };
 		D33A42F62C10BBAE0092268D /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A42F52C10BBAE0092268D /* ImagesListViewController.swift */; };
 		D33A42F92C10D3FC0092268D /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A42F82C10D3FC0092268D /* ImagesListCell.swift */; };
 		D34A906B2C918AE5001F2C58 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34A906A2C918ACE001F2C58 /* OAuthTokenResponseBody.swift */; };
@@ -38,7 +39,7 @@
 		D3DBED072CA1FF23005560DE /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = D3DBED062CA1FF23005560DE /* SwiftKeychainWrapper */; };
 		D3E1CA732C95C7D500DB57FD /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1CA722C95C7D500DB57FD /* ProgressHUD */; };
 		D3F84BB92CAC842E00C787CC /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F84BB82CAC842300C787CC /* ImageListService.swift */; };
-		D3F84BBC2CAC84FC00C787CC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F84BBB2CAC84F900C787CC /* Photo.swift */; };
+		D3F84BBC2CAC84FC00C787CC /* ImageListServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F84BBB2CAC84F900C787CC /* ImageListServiceModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		D30B08632C9C9E1C00CF9446 /* ProfileImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageModel.swift; sourceTree = "<group>"; };
 		D312029B2C9021E4005680A2 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		D31D15382C8790EE00F18925 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D3211CAE2CB533BB0061AEE9 /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
 		D33A42F52C10BBAE0092268D /* ImagesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
 		D33A42F82C10D3FC0092268D /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		D33A42FD2C10E1260092268D /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
@@ -85,7 +87,7 @@
 		D3BEF7842C88D5C7009038F0 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		D3C39B332C26E94D0062FCB2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D3F84BB82CAC842300C787CC /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
-		D3F84BBB2CAC84F900C787CC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		D3F84BBB2CAC84F900C787CC /* ImageListServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListServiceModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,8 @@
 			children = (
 				D33A42F52C10BBAE0092268D /* ImagesListViewController.swift */,
 				D33A42F82C10D3FC0092268D /* ImagesListCell.swift */,
+				D3F84BB82CAC842300C787CC /* ImageListService.swift */,
+				D3F84BBB2CAC84F900C787CC /* ImageListServiceModels.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -183,8 +187,6 @@
 		D367C7092C09FCCF0043579F /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
-				D3F84BBB2CAC84F900C787CC /* Photo.swift */,
-				D3F84BB82CAC842300C787CC /* ImageListService.swift */,
 				D36603952CA2E05E003D127B /* TabBar */,
 				D373D9DF2CA0B7E900D0B571 /* Alert */,
 				D3A170292C9387FC00B727F2 /* Helpers */,
@@ -252,6 +254,7 @@
 		D3C39B322C26E92E0062FCB2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				D3211CAE2CB533BB0061AEE9 /* ProfileLogoutService.swift */,
 				D30B08632C9C9E1C00CF9446 /* ProfileImageModel.swift */,
 				D30B08612C9C9DCC00CF9446 /* ProfileImageService.swift */,
 				D3987E0C2C9B1E7E00555240 /* ProfileModels.swift */,
@@ -378,11 +381,12 @@
 			files = (
 				D3A1702B2C94DE2B00B727F2 /* SnakeCaseJSONDecoder.swift in Sources */,
 				D367C70B2C09FCCF0043579F /* AppDelegate.swift in Sources */,
+				D3211CAF2CB533CF0061AEE9 /* ProfileLogoutService.swift in Sources */,
 				D34A906D2C93783C001F2C58 /* URLSession+data.swift in Sources */,
 				D3987E092C9B14FF00555240 /* UIBlockingProgressHUD.swift in Sources */,
 				D34A906B2C918AE5001F2C58 /* OAuthTokenResponseBody.swift in Sources */,
 				D33A42F92C10D3FC0092268D /* ImagesListCell.swift in Sources */,
-				D3F84BBC2CAC84FC00C787CC /* Photo.swift in Sources */,
+				D3F84BBC2CAC84FC00C787CC /* ImageListServiceModels.swift in Sources */,
 				D3C39B342C26E94D0062FCB2 /* ProfileViewController.swift in Sources */,
 				D3987E0B2C9B182A00555240 /* ProfileService.swift in Sources */,
 				D373D9E12CA0B7F900D0B571 /* AlertPresenter.swift in Sources */,

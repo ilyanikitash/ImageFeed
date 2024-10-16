@@ -38,5 +38,7 @@ enum ProfileImageServiceErrors: Error {
 enum ImageListServiceErrors: Error {
     case invalidRequest
     case invalidURL
+    case invalidToken
     case invalidFetchingImagesList
+    case invalidLikeOperation
 }
