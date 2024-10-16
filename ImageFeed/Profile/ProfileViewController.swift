@@ -9,6 +9,8 @@ final class ProfileViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
+    private var animationLayers: [CALayer] = []
+    private let gradient = CAGradientLayer()
     
     private lazy var nameLabel = createLabel(
         text: "Екатерина Новикова",
@@ -47,6 +49,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        animateProfileImage()
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(forName: ProfileImageService.didChangeNotification,
                          object: nil,
@@ -62,8 +65,7 @@ final class ProfileViewController: UIViewController {
         escapeButton.addTarget(self, action: #selector(didTapEscapeButton), for: .touchUpInside)
     }
     
-    private func animataProfileImage() {
-        let gradient = CAGradientLayer()
+    private func animateProfileImage() {
         gradient.frame = CGRect(origin: .zero, size: CGSize(width: 70, height: 70))
         gradient.locations = [0, 0.1, 0.3]
         gradient.colors = [
@@ -71,7 +73,23 @@ final class ProfileViewController: UIViewController {
             UIColor(red: 0.531, green: 0.533, blue: 0.553, alpha: 1).cgColor,
             UIColor(red: 0.431, green: 0.433, blue: 0.453, alpha: 1).cgColor
         ]
-        gradie
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        gradient.cornerRadius = 35
+        gradient.masksToBounds = true
+        animationLayers.append(gradient)
+        imageView.layer.addSublayer(gradient)
+        
+        gradientAnimation()
+    }
+    
+    private func gradientAnimation() {
+        let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
+        gradientChangeAnimation.duration = 1.0
+        gradientChangeAnimation.repeatCount = .infinity
+        gradientChangeAnimation.fromValue = [0, 0.1, 0.3]
+        gradientChangeAnimation.toValue = [0, 0.8, 1]
+        gradient.add(gradientChangeAnimation, forKey: "locations")
     }
     
     @objc private func didTapEscapeButton() {
@@ -88,9 +106,11 @@ final class ProfileViewController: UIViewController {
             let url = URL(string: profileImageURL)
         else { return }
         imageView.kf.setImage(with: url,
-                              placeholder: UIImage(named: "profile_placeholder")) { result in
+                              placeholder: UIImage(named: "profile_placeholder")) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let value):
+                self.gradient.removeFromSuperlayer()
                 print(value.image)
             case .failure(let error):
                 print("Error loading image: \(error.localizedDescription)")
