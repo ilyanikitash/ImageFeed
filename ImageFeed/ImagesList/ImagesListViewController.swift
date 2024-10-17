@@ -14,7 +14,7 @@ final class ImagesListViewController: UIViewController {
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .long
+        formatter.dateStyle = .medium
         formatter.timeStyle = .none
         return formatter
     }()
@@ -119,12 +119,24 @@ extension ImagesListViewController {
         let image = photos[indexPath.row]
         cell.imageCell.kf.indicatorType = .activity
         cell.imageCell.kf.setImage(with: URL(string: image.largeImageURL), placeholder: UIImage(named: "stub"))
-        cell.dateLabel.text = dateFormatter.string(from: ISO8601DateFormatter().date(from: image.createdAt) ?? Date())
-        cell.dateLabel.textColor = .white
-        
         let isLiked = image.isLiked
         let likeImage = isLiked ? UIImage(named: "active_like") : UIImage(named: "no_active_like")
         cell.likeButton.setImage(likeImage, for: .normal)
+        guard let createdAt = image.createdAt else {
+            cell.dateLabel.text = ""
+            return
+        }
+        
+        let dateF = ISO8601DateFormatter()
+        let date = dateF.date(from: createdAt)
+        
+        guard let date else {
+            cell.dateLabel.text = ""
+            return
+        }
+        
+        cell.dateLabel.text = dateFormatter.string(from: date)
+        cell.dateLabel.textColor = .white
     }
 }
 

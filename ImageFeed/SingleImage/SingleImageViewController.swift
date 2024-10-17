@@ -1,15 +1,6 @@
 import UIKit
 
 final class SingleImageViewController: UIViewController {
-//    var image: UIImage? {
-//        didSet {
-//            guard isViewLoaded, let image else { return }
-//            imageView.image = image
-//            imageView.frame.size = image.size
-//            rescaleAndCenterImageInScrollView(image: image)
-//        }
-//    }
-    
     var imageURL: URL? {
         didSet {
             guard isViewLoaded else {return}
@@ -24,7 +15,7 @@ final class SingleImageViewController: UIViewController {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-        if let imageURL = imageURL {
+        if let _ = imageURL {
             loadImage()
         }
     }
@@ -51,7 +42,6 @@ final class SingleImageViewController: UIViewController {
                 self.rescaleAndCenterImageInScrollView(image: imageResult.image)
             case .failure:
                 break
-                //self.showAlert()
             }
         }
     }
@@ -78,6 +68,5 @@ extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
     }
-    // TODO: Make zoom 
 }
 

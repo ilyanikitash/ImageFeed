@@ -10,13 +10,13 @@ import Foundation
 struct Photo {
     let id: String
     let size: CGSize
-    let createdAt: String
+    let createdAt: String?
     let welocomeDescription: String?
     let thumbImageURL: String
     let largeImageURL: String
     let isLiked: Bool
     
-    init(id: String, size: CGSize, createdAt: String, welocomeDescription: String?, thumbImageURL: String, largeImageURL: String, isLiked: Bool) {
+    init(id: String, size: CGSize, createdAt: String?, welocomeDescription: String?, thumbImageURL: String, largeImageURL: String, isLiked: Bool) {
         self.id = id
         self.size = size
         self.createdAt = createdAt
