@@ -18,6 +18,12 @@ final class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    private lazy var dateFormatterISO8601: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        return formatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -122,13 +128,13 @@ extension ImagesListViewController {
         let isLiked = image.isLiked
         let likeImage = isLiked ? UIImage(named: "active_like") : UIImage(named: "no_active_like")
         cell.likeButton.setImage(likeImage, for: .normal)
+        
         guard let createdAt = image.createdAt else {
             cell.dateLabel.text = ""
             return
         }
         
-        let dateF = ISO8601DateFormatter()
-        let date = dateF.date(from: createdAt)
+        let date = dateFormatterISO8601.date(from: createdAt)
         
         guard let date else {
             cell.dateLabel.text = ""

@@ -51,13 +51,3 @@ struct UrlsResult: Decodable {
     let full: String
     let thumb: String
 }
-
-struct LikePhotoResult: Codable {
-    let photo: LikePhoto
-}
-
-struct LikePhoto: Codable {
-    let id: String
-    let likes: Int
-    let likedByUser: Bool
-}
