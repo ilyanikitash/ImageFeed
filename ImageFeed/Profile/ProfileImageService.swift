@@ -64,5 +64,8 @@ final class ProfileImageService {
         self.task = task
         task.resume()
     }
+    func deleteProfileImage() {
+        profileImageURL = nil
+    }
 }
 

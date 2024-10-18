@@ -12,4 +12,8 @@ final class OAuthTokenStorage {
             }
         }
     }
+    
+    func deleteToken() {
+        KeychainWrapper.standard.removeObject(forKey: "token")
+    }
 }

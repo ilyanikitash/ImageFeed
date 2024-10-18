@@ -53,7 +53,7 @@ extension URLSession {
         let decoder = SnakeCaseJSONDecoder()
         let task = data(for: request) { (result: Result<Data, Error>) in
             switch result {
-                case .success(let data):
+            case .success(let data):
                 do {
                     let object = try decoder.decode(T.self, from: data)
                     completion(.success(object))

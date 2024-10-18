@@ -3,6 +3,7 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    private let profileLogoutService = ProfileLogoutService.shared
     private let profileService = ProfileService.shared
     private let storage = OAuthTokenStorage()
     private let profileImageService = ProfileImageService.shared
@@ -58,6 +59,29 @@ final class ProfileViewController: UIViewController {
         updateAvatar()
         setupConstraints()
         updateProfileDetails(profile: profileService.profile)
+        escapeButton.addTarget(self, action: #selector(didTapEscapeButton), for: .touchUpInside)
+    }
+    
+    @objc private func didTapEscapeButton() {
+        let logoutAlert = UIAlertController(title: "Выход",
+                                        message: "Вы уверены что хотите выйти?",
+                                        preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+            guard let self else { return }
+            self.logout()
+        }
+        let noAction = UIAlertAction(title: "Нет", style: .cancel)
+        logoutAlert.addAction(yesAction)
+        logoutAlert.addAction(noAction)
+        present(logoutAlert, animated: true, completion: nil)
+    }
+    
+    private func logout() {
+        profileLogoutService.logout()
+        
+        let viewController = SplashScreenViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
     }
     
     private func updateAvatar() {
