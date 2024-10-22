@@ -4,7 +4,7 @@
 //
 //  Created by Ilya Nikitash on 21.10.2024.
 //
-import UIKit
+import Foundation
 
 public protocol WebViewPresenterProtocol {
     func viewDidLoad()

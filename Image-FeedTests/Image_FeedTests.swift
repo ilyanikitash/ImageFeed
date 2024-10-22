@@ -106,3 +106,52 @@ final class WebViewPresenterSpy: WebViewPresenterProtocol {
         return nil
     }
 }
+
+final class ProfileViewTests: XCTestCase {
+    func testViewControllerGetProfile() {
+        let viewController = ProfileViewController()
+        let presenter = ProfileViewPresenterSpy()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        viewController.updateProfileDetails()
+        
+        XCTAssertTrue(presenter.profileDidCalled)
+    }
+    
+    func testViewControllerGetAvatar() {
+        let viewController = ProfileViewController()
+        let presenter = ProfileViewPresenterSpy()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        viewController.updateAvatar()
+        
+        XCTAssertTrue(presenter.avatarDidCalled)
+    }
+}
+
+//final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
+//    var presenter: ProfileViewPresenterProtocol?
+//    var profile: ImageFeed.Profile?
+//    var avatarURL: URL?
+//    
+//    
+//    func updateProfileDetails() {}
+//    func updateAvatar() {}
+//}
+
+final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol {
+    var view: ProfileViewControllerProtocol?
+    var profileDidCalled = false
+    var avatarDidCalled = false
+    
+    func getProfile() -> ImageFeed.Profile? {
+        profileDidCalled = true
+        return nil
+    }
+    func getAvatarURL() -> URL? {
+        avatarDidCalled = true
+        return nil
+    }
+}

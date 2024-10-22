@@ -1,7 +1,15 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateProfileDetails()
+    func updateAvatar()
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+
+    var presenter: ProfileViewPresenterProtocol? = ProfileViewPresenter()
     
     private let profileLogoutService = ProfileLogoutService.shared
     private let profileService = ProfileService.shared
@@ -55,20 +63,27 @@ final class ProfileViewController: UIViewController {
                 guard let self else { return }
                 self.updateAvatar()
             }
-        view.backgroundColor = .ypBlack
         updateAvatar()
         setupConstraints()
-        updateProfileDetails(profile: profileService.profile)
+        view.backgroundColor = .ypBlack
         escapeButton.addTarget(self, action: #selector(didTapEscapeButton), for: .touchUpInside)
     }
+
+    private func logout() {
+        profileLogoutService.logout()
+        let viewController = SplashScreenViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
+    }
+    
     
     @objc private func didTapEscapeButton() {
         let logoutAlert = UIAlertController(title: "Выход",
-                                        message: "Вы уверены что хотите выйти?",
-                                        preferredStyle: .alert)
+                                                message: "Вы уверены что хотите выйти?",
+                                                preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
-            guard let self else { return }
-            self.logout()
+                guard let self else { return }
+                    self.logout()
         }
         let noAction = UIAlertAction(title: "Нет", style: .cancel)
         logoutAlert.addAction(yesAction)
@@ -76,19 +91,8 @@ final class ProfileViewController: UIViewController {
         present(logoutAlert, animated: true, completion: nil)
     }
     
-    private func logout() {
-        profileLogoutService.logout()
-        
-        let viewController = SplashScreenViewController()
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
-    }
-    
-    private func updateAvatar() {
-        guard
-            let profileImageURL = profileImageService.profileImageURL,
-            let url = URL(string: profileImageURL)
-        else { return }
+    func updateAvatar() {
+        let url = presenter?.getAvatarURL()
         imageView.kf.setImage(with: url,
                               placeholder: UIImage(named: "profile_placeholder")) { result in
             switch result {
@@ -100,10 +104,10 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    private func updateProfileDetails(profile: Profile?) {
-        guard let profile = profile else {
-            return
-        }
+    func updateProfileDetails() {
+        guard let profile = presenter?.getProfile() else {
+            print("error getting profile")
+            return }
         self.nameLabel.text = profile.name
         self.loginLabel.text = profile.loginName
         self.descriptionLabel.text = profile.bio
