@@ -28,8 +28,10 @@ final class ImagesListCell: UITableViewCell {
     func setIsLiked(isLike: Bool, cell: ImagesListCell) {
         if isLike {
             cell.likeButton.setImage(UIImage(named: "active_like"), for: .normal)
+            cell.likeButton.accessibilityIdentifier = "like button on"
         } else {
             cell.likeButton.setImage(UIImage(named: "no_active_like"), for: .normal)
+            cell.likeButton.accessibilityIdentifier = "like button off"
         }
     }
 }

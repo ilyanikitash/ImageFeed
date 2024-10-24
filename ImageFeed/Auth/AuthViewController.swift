@@ -10,6 +10,7 @@ final class AuthViewController: UIViewController {
     
     private let loginButton = {
         let button = UIButton(type: .system)
+        button.accessibilityIdentifier = "Authenticate"
         button.backgroundColor = .white
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
         button.setTitle("Войти", for: .normal)
@@ -37,10 +38,14 @@ final class AuthViewController: UIViewController {
     }
     
     @objc private func didTapLoginButton() {
-        let viewController = WebViewViewController()
-        viewController.delegate = self
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
+        let authHelper = AuthHelper()
+        let webViewViewController = WebViewViewController()
+        let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+        webViewViewController.presenter = webViewPresenter
+        webViewPresenter.view = webViewViewController
+        webViewViewController.modalPresentationStyle = .fullScreen
+        webViewViewController.delegate = self
+        present(webViewViewController, animated: true, completion: nil)
     }
     
     func setUpViews() {
