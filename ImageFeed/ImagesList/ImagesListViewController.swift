@@ -1,31 +1,25 @@
 import UIKit
 import Kingfisher
 
-final class ImagesListViewController: UIViewController {
+public protocol ImagesListViewControllerProtocol: AnyObject {
+    var presenter: ImagesListViewProtocol? { get set }
+}
+
+final class ImagesListViewController: UIViewController & ImagesListViewControllerProtocol{
     
     @IBOutlet private var tableView: UITableView!
     
+    var photos: [Photo] = []
+    var presenter: ImagesListViewProtocol? = ImagesListPresenter()
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let imageListService = ImageListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
-    var photos: [Photo] = []
     private var alertPresenter: AlertPresenter?
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
-    
-    private lazy var dateFormatterISO8601: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        return formatter
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
         setupTableView()
         setupObserver()
         imageListService.fetchPhotosNextPage()
@@ -134,14 +128,14 @@ extension ImagesListViewController {
             return
         }
         
-        let date = dateFormatterISO8601.date(from: createdAt)
+        let date = presenter?.dateFormatterISO8601.date(from: createdAt)
         
         guard let date else {
             cell.dateLabel.text = ""
             return
         }
         
-        cell.dateLabel.text = dateFormatter.string(from: date)
+        cell.dateLabel.text = presenter?.dateFormatter.string(from: date)
         cell.dateLabel.textColor = .white
     }
 }

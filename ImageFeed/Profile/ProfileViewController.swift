@@ -8,14 +8,9 @@ public protocol ProfileViewControllerProtocol: AnyObject {
 }
 
 final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
-
+    
     var presenter: ProfileViewPresenterProtocol? = ProfileViewPresenter()
-    
     private let profileLogoutService = ProfileLogoutService.shared
-    private let profileService = ProfileService.shared
-    private let storage = OAuthTokenStorage()
-    private let profileImageService = ProfileImageService.shared
-    
     private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var nameLabel = createLabel(

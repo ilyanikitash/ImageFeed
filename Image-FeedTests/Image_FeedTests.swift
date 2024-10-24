@@ -131,16 +131,6 @@ final class ProfileViewTests: XCTestCase {
     }
 }
 
-//final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
-//    var presenter: ProfileViewPresenterProtocol?
-//    var profile: ImageFeed.Profile?
-//    var avatarURL: URL?
-//    
-//    
-//    func updateProfileDetails() {}
-//    func updateAvatar() {}
-//}
-
 final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol {
     var view: ProfileViewControllerProtocol?
     var profileDidCalled = false
@@ -154,4 +144,49 @@ final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol {
         avatarDidCalled = true
         return nil
     }
+}
+
+final class ImagesListViewTests: XCTestCase {
+    func testViewControllerCallsViewDidLoad() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
+        let presenter = ImagesListPresenterSpy()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        _ = viewController.view
+        
+        XCTAssertTrue(presenter.viewDidLoadCalled)
+    }
+    
+    func testViewControllerCallsConfigFormatter() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
+        let presenter = ImagesListPresenterSpy()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        _ = viewController.view
+        
+        XCTAssertTrue(presenter.configFormatterCalled)
+    }
+}
+
+final class ImagesListPresenterSpy: ImagesListViewProtocol {
+    var view: (any ImageFeed.ImagesListViewControllerProtocol)?
+    var dateFormatter: DateFormatter = DateFormatter()
+    var dateFormatterISO8601: ISO8601DateFormatter = ISO8601DateFormatter()
+    var viewDidLoadCalled = false
+    var configFormatterCalled = false
+    
+    func viewDidLoad() {
+        viewDidLoadCalled = true
+        configFormatter()
+    }
+    
+    func configFormatter() {
+        configFormatterCalled = true
+    }
+    
+    
 }
