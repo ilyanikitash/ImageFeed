@@ -52,7 +52,6 @@ extension SplashScreenViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         vc.dismiss(animated: true) { [weak self]  in
             guard let self = self else { return }
-            print("did authenticate")
             self.fetchOAuthToken(code)
         }
     }
