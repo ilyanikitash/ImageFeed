@@ -44,6 +44,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
             systemName: "ipad.and.arrow.forward") ?? UIImage(),
                                            target: nil,
                                            action: nil)
+        button.accessibilityIdentifier = "logout button"
         button.tintColor = .ypRed
         return button
     }()
@@ -59,6 +60,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
                 self.updateAvatar()
             }
         updateAvatar()
+        updateProfileDetails()
         setupConstraints()
         view.backgroundColor = .ypBlack
         escapeButton.addTarget(self, action: #selector(didTapEscapeButton), for: .touchUpInside)

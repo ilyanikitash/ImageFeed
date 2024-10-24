@@ -51,6 +51,7 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMf-bb-GtX" userLabel="Like Button">
                                                     <rect key="frame" x="329" y="11" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="like button off"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="2S2-ms-HXL"/>
                                                         <constraint firstAttribute="height" constant="44" id="J59-TC-iFf"/>
@@ -129,6 +130,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZG-ha-YTS" userLabel="Back Button">
                                 <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                <accessibility key="accessibilityConfiguration" identifier="navigation back button white"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="DUm-u7-WcG"/>
                                     <constraint firstAttribute="width" constant="48" id="YX8-yp-B4k"/>
@@ -182,14 +184,6 @@
                     <view key="view" contentMode="scaleToFill" id="IFf-60-eyu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="hvbh" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TvS-5j-xzZ">
-                                <rect key="frame" x="148" y="460" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="QEs-fL-eXK"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
