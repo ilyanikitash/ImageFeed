@@ -19,23 +19,30 @@ final class ImageFeedUITests: XCTestCase {
     }
     
     func testAuth() throws {
+        let email = ""
+        let password = ""
+    
         app.buttons["Authenticate"].tap()
         
         let webView = app.webViews["UnsplashWebView"]
-        XCTAssertTrue(webView.waitForExistence(timeout: 10))
+        XCTAssertTrue(webView.waitForExistence(timeout: 5))
         
         let loginTextField = webView.descendants(matching: .textField).element
-        XCTAssertTrue(loginTextField.waitForExistence(timeout: 10))
+        XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
         
         loginTextField.tap()
-        loginTextField.typeText("")
+        loginTextField.typeText(email)
         webView.swipeUp()
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
-        XCTAssertTrue(passwordTextField.waitForExistence(timeout: 10))
-            
+        XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5), "password field not found")
+        
         passwordTextField.tap()
-        passwordTextField.typeText("")
+        sleep(2)
+        // не нашел ответа на вопрос почему иногда бывает так, что пароль только частично вводится, работает это через раз, но если работает, то все тесты успешны
+        // сделал отдельную переменную для пароля и поставил задрежку
+        passwordTextField.typeText(password)
+        sleep(2)
         webView.swipeUp()
         
         webView.buttons["Login"].tap()
@@ -54,7 +61,7 @@ final class ImageFeedUITests: XCTestCase {
         
         sleep(10)
         
-        let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
+        let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 2)
         
         cellToLike.buttons["like button off"].tap()
         cellToLike.buttons["like button on"].tap()

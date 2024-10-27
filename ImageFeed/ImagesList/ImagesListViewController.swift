@@ -108,8 +108,11 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == photos.count {
-            imageListService.fetchPhotosNextPage()
+        let testMode =  ProcessInfo.processInfo.arguments.contains("test mode")
+        if !testMode {
+            if indexPath.row + 1 == photos.count {
+                imageListService.fetchPhotosNextPage()
+            }
         }
     }
 }
